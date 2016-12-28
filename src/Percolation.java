@@ -80,7 +80,7 @@ public class Percolation {
                 sb.append("\n");
             }
         }
-        System.out.println(sb.toString());
+        StdOut.println(sb.toString());
     }
     
 
