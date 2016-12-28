@@ -10,7 +10,6 @@ public class Percolation {
     
     // create n-by-n grid, with all sites blocked
     public Percolation(int n) {
-        System.out.println("instantiate Percolation with N: " + n);
         N = n;
         matrix = new int [n * n];
         openCount = 0;
@@ -24,28 +23,20 @@ public class Percolation {
         int c = col - 1;
         if(matrix[r * N + c]==0) {
             if(row == 1) {
-//                uf.union(r * N + c, N * N);
                 uf.union(N * N, r * N + c);
             } else if(row == N) {
-//                uf.union(r * N + c, N * N + 1);
                 uf.union(N * N + 1, r * N + c);
-            } else {
-            }
-            // left
-            checkSides(r, c, r, c - 1);
-            // top
-            checkSides(r, c, r - 1, c);
-            // right
-            checkSides(r, c, r, c + 1);
-            // bottom
-            checkSides(r, c, r + 1, c);
+            } 
+            checkSides(r, c, r, c - 1); // left
+            checkSides(r, c, r - 1, c); // top
+            checkSides(r, c, r, c + 1); // right
+            checkSides(r, c, r + 1, c); // bottom
             matrix[r * N + c] = 1;
             openCount++;                
         }
     }
     
     private void checkSides(int r, int c, int i, int j) {
-//        System.out.println(i + " " + j);
         if(i >= 0 && i < N && j >= 0 && j < N && matrix[i * N + j]==1) {
             uf.union(r * N + c, i * N + j);
         }
@@ -85,7 +76,7 @@ public class Percolation {
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < matrix.length; i++) {
             sb.append(matrix[i] + " ");
-            if(i % N == 4) {                
+            if(i % N == N-1) {                
                 sb.append("\n");
             }
         }
@@ -100,13 +91,13 @@ public class Percolation {
         while (!StdIn.isEmpty()) {
             int p = StdIn.readInt();
             int q = StdIn.readInt();
-            StdOut.println("open: " + p + " " + q);
             perc.open(p, q);
-            System.out.println("Connected: " + perc.isFull(4, 2));
+            if(perc.percolates()) {
+                break;
+            }
         }
         perc.printMatrix();
-//        perc.uf.printParent();
-        System.out.println("Percolates: " + perc.percolates());
+        StdOut.println("Percolates: " + perc.percolates() + ", count: " + perc.openCount);
     }
 
 }
