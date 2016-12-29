@@ -44,7 +44,7 @@ public class Percolation {
     
     private void validate(int r, int c) {
         if(r < 1 || r > N || c < 1 || c > N) {
-            throw new IndexOutOfBoundsException();
+            throw new IllegalArgumentException();
         }
     }
 
