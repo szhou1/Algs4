@@ -4,7 +4,7 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
 
-    private int N;
+    private int n;
     private int[] matrix;
     private int openCount;
     private WeightedQuickUnionUF uf;
@@ -13,7 +13,7 @@ public class Percolation {
     public Percolation(int n) {
         if (n <= 0)
             throw new IllegalArgumentException();
-        N = n;
+        this.n = n;
         matrix = new int[n * n];
         openCount = 0;
         uf = new WeightedQuickUnionUF(n * n + 2);
@@ -24,29 +24,29 @@ public class Percolation {
         validate(row, col);
         int r = row - 1;
         int c = col - 1;
-        if (matrix[r * N + c] == 0) {
+        if (matrix[r * n + c] == 0) {
             if (row == 1) {
-                uf.union(N * N, r * N + c);
-            } else if (row == N) {
-                uf.union(N * N + 1, r * N + c);
+                uf.union(n * n, r * n + c);
+            } else if (row == n) {
+                uf.union(n * n + 1, r * n + c);
             }
             checkSides(r, c, r, c - 1); // left
             checkSides(r, c, r - 1, c); // top
             checkSides(r, c, r, c + 1); // right
             checkSides(r, c, r + 1, c); // bottom
-            matrix[r * N + c] = 1;
+            matrix[r * n + c] = 1;
             openCount++;
         }
     }
 
     private void checkSides(int r, int c, int i, int j) {
-        if (i >= 0 && i < N && j >= 0 && j < N && matrix[i * N + j] == 1) {
-            uf.union(r * N + c, i * N + j);
+        if (i >= 0 && i < n && j >= 0 && j < n && matrix[i * n + j] == 1) {
+            uf.union(r * n + c, i * n + j);
         }
     }
 
     private void validate(int r, int c) {
-        if (r < 1 || r > N || c < 1 || c > N) {
+        if (r < 1 || r > n || c < 1 || c > n) {
             throw new IndexOutOfBoundsException();
         }
     }
@@ -56,7 +56,7 @@ public class Percolation {
         validate(row, col);
         row--;
         col--;
-        return matrix[row * N + col] == 1;
+        return matrix[row * n + col] == 1;
     }
 
     // is site (row, col) full?
@@ -64,7 +64,7 @@ public class Percolation {
         validate(row, col);
         row--;
         col--;
-        return matrix[row * N + col] == 1 && uf.connected(row * N + col, N * N);
+        return matrix[row * n + col] == 1 && uf.connected(row * n + col, n * n);
     }
 
     // number of open sites
@@ -74,14 +74,14 @@ public class Percolation {
 
     // does the system percolate?
     public boolean percolates() {
-        return uf.connected(N * N, N * N + 1);
+        return uf.connected(n * n, n * n + 1);
     }
 
     private void printMatrix() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < matrix.length; i++) {
             sb.append(matrix[i] + " ");
-            if (i % N == N - 1) {
+            if (i % n == n - 1) {
                 sb.append("\n");
             }
         }
@@ -101,7 +101,7 @@ public class Percolation {
             }
         }
         perc.printMatrix();
-        StdOut.println("Percolates: " + perc.percolates() + ", count: " + perc.openCount);
+        StdOut.println("Percolates: " + perc.percolates() + ", open sites count: " + perc.openCount);
     }
 
 }
