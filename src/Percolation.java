@@ -5,7 +5,7 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 public class Percolation {
 
     private int n;
-    private int[] matrix;
+    private boolean[] matrix;
     private int openCount;
     private WeightedQuickUnionUF uf;
     private WeightedQuickUnionUF ufbw;
@@ -15,7 +15,7 @@ public class Percolation {
         if (n <= 0)
             throw new IllegalArgumentException();
         this.n = n;
-        matrix = new int[n * n];
+        matrix = new boolean[n * n];
         openCount = 0;
         uf = new WeightedQuickUnionUF(n * n + 2);
         ufbw = new WeightedQuickUnionUF(n * n + 2);
@@ -26,7 +26,7 @@ public class Percolation {
         validate(row, col);
         int r = row - 1;
         int c = col - 1;
-        if (matrix[r * n + c] == 0) {
+        if (!matrix[r * n + c]) {
             if (row == 1) {
                 uf.union(n * n, r * n + c);
                 ufbw.union(n * n, r * n + c);
@@ -38,13 +38,13 @@ public class Percolation {
             checkSides(r, c, r - 1, c); // top
             checkSides(r, c, r, c + 1); // right
             checkSides(r, c, r + 1, c); // bottom
-            matrix[r * n + c] = 1;
+            matrix[r * n + c] = true;
             openCount++;
         }
     }
 
     private void checkSides(int r, int c, int i, int j) {
-        if (i >= 0 && i < n && j >= 0 && j < n && matrix[i * n + j] == 1) {
+        if (i >= 0 && i < n && j >= 0 && j < n && matrix[i * n + j]) {
             uf.union(r * n + c, i * n + j);
             ufbw.union(r * n + c, i * n + j);
         }
@@ -57,17 +57,19 @@ public class Percolation {
     }
 
     // is site (row, col) open?
-    public boolean isOpen(int row, int col) {
-        validate(row, col);
-        row--; col--;
-        return matrix[row * n + col] == 1;
+    public boolean isOpen(int r, int c) {
+        validate(r, c);
+        r--;
+        c--;
+        return matrix[r * n + c];
     }
 
     // is site (row, col) connected to the top row via open sites?
-    public boolean isFull(int row, int col) {
-        validate(row, col);
-        row--; col--;
-        return matrix[row * n + col] == 1 && ufbw.connected(row * n + col, n * n);
+    public boolean isFull(int r, int c) {
+        validate(r, c);
+        r--;
+        c--;
+        return matrix[r * n + c] && ufbw.connected(r * n + c, n * n);
     }
 
     // number of open sites
