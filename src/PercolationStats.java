@@ -1,4 +1,5 @@
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
@@ -16,22 +17,19 @@ public class PercolationStats {
         for (int i = 0; i < trials; i++) {
             perc = new Percolation(n);
             for (int j = 0; j < n * n; j++) {
-                int rand = (int) (Math.random() * n * n);
+                int rand = (int) (StdRandom.uniform() * n * n);
                 int row = (rand / n) + 1;
                 int col = (rand % n) + 1;
 
                 // try to find a closed one
                 while (perc.isOpen(row, col)) {
-                    rand = (int) (Math.random() * n * n);
+                    rand = (int) (StdRandom.uniform() * n * n);
                     row = (rand / n) + 1;
                     col = (rand % n) + 1;
                 }
-                // System.out.println("opening: " + row + " "+ col);
                 perc.open(row, col);
                 if (perc.percolates()) {
-                    // System.out.println("open: " + perc.numberOfOpenSites());
                     stats[i] = (double) perc.numberOfOpenSites() / (double) (n * n);
-                    // System.out.println(stats[i]);
                     break;
                 }
             }
