@@ -8,6 +8,7 @@ public class Percolation {
     private int[] matrix;
     private int openCount;
     private WeightedQuickUnionUF uf;
+    private WeightedQuickUnionUF ufbw;
 
     // create n-by-n grid, with all sites blocked
     public Percolation(int n) {
@@ -17,6 +18,7 @@ public class Percolation {
         matrix = new int[n * n];
         openCount = 0;
         uf = new WeightedQuickUnionUF(n * n + 2);
+        ufbw = new WeightedQuickUnionUF(n * n + 2);
     }
 
     // open site (row, col) if it is not open already
@@ -27,6 +29,7 @@ public class Percolation {
         if (matrix[r * n + c] == 0) {
             if (row == 1) {
                 uf.union(n * n, r * n + c);
+                ufbw.union(n * n, r * n + c);
             }
             if (row == n) {
                 uf.union(n * n + 1, r * n + c);
@@ -43,6 +46,7 @@ public class Percolation {
     private void checkSides(int r, int c, int i, int j) {
         if (i >= 0 && i < n && j >= 0 && j < n && matrix[i * n + j] == 1) {
             uf.union(r * n + c, i * n + j);
+            ufbw.union(r * n + c, i * n + j);
         }
     }
 
@@ -55,17 +59,15 @@ public class Percolation {
     // is site (row, col) open?
     public boolean isOpen(int row, int col) {
         validate(row, col);
-        row--;
-        col--;
+        row--; col--;
         return matrix[row * n + col] == 1;
     }
 
-    // is site (row, col) full?
+    // is site (row, col) connected to the top row via open sites?
     public boolean isFull(int row, int col) {
         validate(row, col);
-        row--;
-        col--;
-        return matrix[row * n + col] == 1 && uf.connected(row * n + col, n * n);
+        row--; col--;
+        return matrix[row * n + col] == 1 && ufbw.connected(row * n + col, n * n);
     }
 
     // number of open sites
