@@ -27,7 +27,8 @@ public class Percolation {
         if (matrix[r * n + c] == 0) {
             if (row == 1) {
                 uf.union(n * n, r * n + c);
-            } else if (row == n) {
+            }
+            if (row == n) {
                 uf.union(n * n + 1, r * n + c);
             }
             checkSides(r, c, r, c - 1); // left
