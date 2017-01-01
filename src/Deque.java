@@ -7,6 +7,8 @@ public class Deque<Item> implements Iterable<Item> {
     int size;
 
     public Deque() {
+        head = null;
+        tail = null;
         size = 0;
     }
 
@@ -33,6 +35,7 @@ public class Deque<Item> implements Iterable<Item> {
     // add the item to the front
     public void addFirst(Item item) {
         Node node = new Node(item);
+        size++;
         if (isEmpty()) {
             head = tail = node;
             return;
@@ -46,6 +49,7 @@ public class Deque<Item> implements Iterable<Item> {
     // add the item to the end
     public void addLast(Item item) {
         Node node = new Node(item);
+        size++;
         if (isEmpty()) {
             head = tail = node;
             return;
@@ -60,6 +64,7 @@ public class Deque<Item> implements Iterable<Item> {
     public Item removeFirst() {
         if (isEmpty())
             return null;
+        size--;
         Item first = head.item;
         head.next.prev = null;
         head = head.next;
@@ -70,6 +75,7 @@ public class Deque<Item> implements Iterable<Item> {
     public Item removeLast() {
         if (isEmpty())
             return null;
+        size--;
         Item last = tail.item;
         tail.prev.next = null;
         tail = tail.prev;
