@@ -1,5 +1,6 @@
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdRandom;
 
 public class Permutation {
 
@@ -7,25 +8,19 @@ public class Permutation {
         int k = Integer.parseInt(args[0]);
         RandomizedQueue<String> queue = new RandomizedQueue<String>();
 
-        // StdOut.println("k: " + k);
-        while (!StdIn.isEmpty()) {
-            // if(queue.size() == k) {
-            // String d = queue.dequeue();
-            // StdOut.println("-: " + d);
-            // }
-            String s = StdIn.readString();
-            queue.enqueue(s);
-            // System.out.println("+: " + s);
+        while (!StdIn.isEmpty() && queue.size() < k) {
+            queue.enqueue(StdIn.readString());
         }
 
-        // StdOut.println("Size:" + queue.size());
-        // StdOut.println("Content:");
+        int n = k;
+        while (!StdIn.isEmpty()) {
+            String s = StdIn.readString();
+            if (StdRandom.uniform(++n) <= k) {
+                queue.dequeue();
+                queue.enqueue(s);
+            }
+        }
 
-        // for (String s : queue) {
-        // StdOut.println(s);
-        // }
-
-        // StdOut.println("result");
         for (int i = 0; i < k; i++) {
             StdOut.println(queue.dequeue());
         }
