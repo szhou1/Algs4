@@ -1,3 +1,5 @@
+import static org.junit.Assert.*;
+
 import java.util.Iterator;
 
 import edu.princeton.cs.algs4.StdOut;
@@ -17,7 +19,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     // is the queue empty?
     public boolean isEmpty() {
-        return q.length > 0;
+        return count == 0;
     }
 
     // return the number of items on the queue
@@ -118,12 +120,17 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public static void main(String[] args) { // unit testing
 
         RandomizedQueue<String> queue = new RandomizedQueue<String>();
+        assertTrue(queue.isEmpty());
+
         queue.enqueue("a");
+        assertEquals(1, queue.size());
         queue.enqueue("b");
         queue.enqueue("c");
         queue.enqueue("d");
         queue.enqueue("e");
         queue.enqueue("f");
+        assertEquals(6, queue.size());
+        
         
         StdOut.println("count: " + queue.count);
         StdOut.println("cap: " + queue.queueCapacity());
@@ -143,6 +150,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         for(String s : queue) {
             StdOut.println(queue.dequeue());
         }
+        assertTrue(queue.isEmpty());        
+        assertEquals(0, queue.size());
         for(String s : queue) {
             StdOut.println(s);
         }        
