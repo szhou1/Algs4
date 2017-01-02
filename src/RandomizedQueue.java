@@ -45,8 +45,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public Item dequeue() {
         int randomIndex = (int) (StdRandom.uniform(count));
         Item item = q[randomIndex];
-        count--;
-        q[randomIndex] = q[count];
+        q[randomIndex] = q[--count];
         q[count] = null;
         if(count < 0.25 * q.length) {
             StdOut.println("shrink array");
@@ -113,7 +112,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         queue.enqueue("c");
         assertEquals(3, queue.size());
 
-        for(String s : queue) { StdOut.println(s); }
+        for(String s : queue) { StdOut.println(s); assertNotNull(s); }
         StdOut.println("count: " + queue.count);
         StdOut.println("cap: " + queue.queueCapacity());
         
@@ -128,23 +127,27 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         
         for(String s : queue) {
             StdOut.println(s);
+            assertNotNull(s);
         }
         
         StdOut.println("dequeued: " + queue.dequeue());
         
         for(String s : queue) {
             StdOut.println(s);
+            assertNotNull(s);
         }        
         StdOut.println("count: " + queue.count);
         StdOut.println("cap: " + queue.queueCapacity());
         
         for(String s : queue) {
             StdOut.println(queue.dequeue());
+            assertNotNull(s);
         }
         assertTrue(queue.isEmpty());        
         assertEquals(0, queue.size());
         for(String s : queue) {
-            StdOut.println(s);
+            StdOut.println(s);            
+            assertNotNull(s);
         }        
         StdOut.println("count: " + queue.count);
         StdOut.println("cap: " + queue.queueCapacity());

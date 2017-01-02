@@ -9,21 +9,26 @@ public class Permutation {
 
         StdOut.println("k: " + k);
         while(!StdIn.isEmpty()) {
-            if(queue.size() == k) {
-                String d = queue.dequeue();
-                StdOut.println("Dequeued: " + d);
-            }
+//            if(queue.size() == k) {
+//                String d = queue.dequeue();
+//                StdOut.println("-: " + d);
+//            }
             String s = StdIn.readString();
             queue.enqueue(s);                
-            System.out.println("Enqueued: " + s);
+            System.out.println("+: " + s);
         }
 
         StdOut.println("Size:" + queue.size());
         StdOut.println("Cap:" + queue.queueCapacity());
-        StdOut.println("Result:");
+        StdOut.println("Content:");
         
         for(String s : queue) {
             StdOut.println(s);
+        }
+        
+        StdOut.println("result");
+        for(int i = 0; i < k; i++) {
+            StdOut.println(queue.dequeue());
         }
     }
 }
