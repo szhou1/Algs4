@@ -22,7 +22,6 @@ public class TestRandomizedQueue {
             assertNotNull(s);
         }
         StdOut.println("count: " + queue.size());
-        StdOut.println("cap: " + queue.queueCapacity());
 
         queue.enqueue("d");
         queue.enqueue("e");
@@ -30,7 +29,6 @@ public class TestRandomizedQueue {
         assertEquals(6, queue.size());
 
         StdOut.println("count: " + queue.size());
-        StdOut.println("cap: " + queue.queueCapacity());
 
         for (String s : queue) {
             StdOut.println(s);
@@ -44,7 +42,6 @@ public class TestRandomizedQueue {
             assertNotNull(s);
         }
         StdOut.println("count: " + queue.size());
-        StdOut.println("cap: " + queue.queueCapacity());
 
         for (String s : queue) {
             StdOut.println(queue.dequeue());
@@ -57,7 +54,6 @@ public class TestRandomizedQueue {
             assertNotNull(s);
         }
         StdOut.println("count: " + queue.size());
-        StdOut.println("cap: " + queue.queueCapacity());
 
     }
 }

@@ -19,7 +19,6 @@ public class Permutation {
         }
 
         StdOut.println("Size:" + queue.size());
-        StdOut.println("Cap:" + queue.queueCapacity());
         StdOut.println("Content:");
 
         for (String s : queue) {

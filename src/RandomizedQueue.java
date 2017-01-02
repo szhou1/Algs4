@@ -24,34 +24,29 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         return count;
     }
 
-    public int queueCapacity() {
-        return q.length;
-    }
-
     // add the item
     public void enqueue(Item item) {
         q[count] = item;
         count++;
         if (count > (0.75 * q.length)) {
-            StdOut.println("enlarge array");
             resize(q.length * 2);
         }
     }
 
     // remove and return a random item
     public Item dequeue() {
-        int randomIndex = (int) (StdRandom.uniform(count));
+        int randomIndex = StdRandom.uniform(count);
         Item item = q[randomIndex];
         q[randomIndex] = q[--count];
         q[count] = null;
         if (count < 0.25 * q.length) {
-            StdOut.println("shrink array");
             resize(q.length / 2);
         }
         return item;
     }
 
     private void resize(int newSize) {
+        StdOut.println("Resize to " + newSize);
         Item[] resized = (Item[]) new Object[newSize];
         for (int i = 0; i < count; i++) {
             resized[i] = q[i];
