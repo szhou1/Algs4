@@ -7,11 +7,10 @@ import edu.princeton.cs.algs4.StdRandom;
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
 
-    private Item [] q;
+    private Item[] q;
     private int count;
-    
+
     // construct an empty randomized queue
-    @SuppressWarnings("unchecked")
     public RandomizedQueue() {
         q = (Item[]) new Object[4];
         count = 0;
@@ -26,7 +25,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public int size() {
         return count;
     }
-    
+
     public int queueCapacity() {
         return q.length;
     }
@@ -35,7 +34,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public void enqueue(Item item) {
         q[count] = item;
         count++;
-        if(count > (0.75 * q.length)) {
+        if (count > (0.75 * q.length)) {
             StdOut.println("enlarge array");
             resize(q.length * 2);
         }
@@ -47,17 +46,16 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         Item item = q[randomIndex];
         q[randomIndex] = q[--count];
         q[count] = null;
-        if(count < 0.25 * q.length) {
+        if (count < 0.25 * q.length) {
             StdOut.println("shrink array");
             resize(q.length / 2);
         }
         return item;
     }
-    
-    @SuppressWarnings("unchecked")
+
     private void resize(int newSize) {
-        Item [] resized = (Item []) new Object[newSize];
-        for(int i = 0; i < count; i++) {
+        Item[] resized = (Item[]) new Object[newSize];
+        for (int i = 0; i < count; i++) {
             resized[i] = q[i];
         }
         q = resized;
@@ -72,22 +70,21 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public Iterator<Item> iterator() {
         return new QueueIterator();
     }
-    
+
     private class QueueIterator implements Iterator<Item> {
 
-        private Item [] qIter;
+        private Item[] qIter;
         private int countIter;
-        
-        @SuppressWarnings("unchecked")
+
         public QueueIterator() {
-            qIter = (Item []) new Object[count];
-            for(int i = 0; i < count; i++) {
+            qIter = (Item[]) new Object[count];
+            for (int i = 0; i < count; i++) {
                 qIter[i] = q[i];
             }
             StdRandom.shuffle(qIter);
             countIter = count;
         }
-        
+
         @Override
         public boolean hasNext() {
             return countIter > 0;
@@ -98,9 +95,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             Item item = qIter[--countIter];
             return item;
         }
-        
+
     }
-    
+
     public static void main(String[] args) { // unit testing
 
         RandomizedQueue<String> queue = new RandomizedQueue<String>();
@@ -112,46 +109,47 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         queue.enqueue("c");
         assertEquals(3, queue.size());
 
-        for(String s : queue) { StdOut.println(s); assertNotNull(s); }
+        for (String s : queue) {
+            StdOut.println(s);
+            assertNotNull(s);
+        }
         StdOut.println("count: " + queue.count);
         StdOut.println("cap: " + queue.queueCapacity());
-        
+
         queue.enqueue("d");
         queue.enqueue("e");
         queue.enqueue("f");
         assertEquals(6, queue.size());
-        
-        
+
         StdOut.println("count: " + queue.count);
         StdOut.println("cap: " + queue.queueCapacity());
-        
-        for(String s : queue) {
+
+        for (String s : queue) {
             StdOut.println(s);
             assertNotNull(s);
         }
-        
+
         StdOut.println("dequeued: " + queue.dequeue());
-        
-        for(String s : queue) {
+
+        for (String s : queue) {
             StdOut.println(s);
             assertNotNull(s);
-        }        
+        }
         StdOut.println("count: " + queue.count);
         StdOut.println("cap: " + queue.queueCapacity());
-        
-        for(String s : queue) {
+
+        for (String s : queue) {
             StdOut.println(queue.dequeue());
             assertNotNull(s);
         }
-        assertTrue(queue.isEmpty());        
+        assertTrue(queue.isEmpty());
         assertEquals(0, queue.size());
-        for(String s : queue) {
-            StdOut.println(s);            
+        for (String s : queue) {
+            StdOut.println(s);
             assertNotNull(s);
-        }        
+        }
         StdOut.println("count: " + queue.count);
         StdOut.println("cap: " + queue.queueCapacity());
-                
-        
+
     }
 }
