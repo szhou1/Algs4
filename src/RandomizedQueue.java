@@ -13,7 +13,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     // construct an empty randomized queue
     @SuppressWarnings("unchecked")
     public RandomizedQueue() {
-        q = (Item[]) new Object[2];
+        q = (Item[]) new Object[4];
         count = 0;
     }
 
@@ -32,52 +32,41 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     // add the item
-    @SuppressWarnings("unchecked")
     public void enqueue(Item item) {
         q[count] = item;
         count++;
-        if(count > 0.75 * q.length) {
+        if(count > (0.75 * q.length)) {
             StdOut.println("enlarge array");
-            Item [] larger = (Item []) new Object[q.length * 2];
-            for(int i = 0; i < q.length; i++) {
-                larger[i] = q[i];
-            }
-            q = larger;
+            resize(q.length * 2);
         }
     }
 
     // remove and return a random item
-    @SuppressWarnings("unchecked")
     public Item dequeue() {
-        int randomIndex = (int) (StdRandom.uniform() * q.length);
-        while(q[randomIndex] == null) {
-            randomIndex = (int) (StdRandom.uniform() * q.length);
-        }
+        int randomIndex = (int) (StdRandom.uniform(count));
         Item item = q[randomIndex];
-        q[randomIndex] = null;
         count--;
+        q[randomIndex] = q[count];
+        q[count] = null;
         if(count < 0.25 * q.length) {
             StdOut.println("shrink array");
-            Item [] smaller = (Item []) new Object[q.length / 2];
-            for(int i = 0, j = 0; i < q.length; i++) {
-                if(q[i] != null) {
-                    smaller[j] = q[i];
-                    j++;
-                }
-            }
-            q = smaller;
+            resize(q.length / 2);
         }
         return item;
+    }
+    
+    @SuppressWarnings("unchecked")
+    private void resize(int newSize) {
+        Item [] resized = (Item []) new Object[newSize];
+        for(int i = 0; i < count; i++) {
+            resized[i] = q[i];
+        }
+        q = resized;
     }
 
     // return (but do not remove) a random item
     public Item sample() {
-        int randomIndex = (int) (StdRandom.uniform() * q.length);
-        while(q[randomIndex] == null) {
-            randomIndex = (int) (StdRandom.uniform() * q.length);
-        }
-        Item item = q[randomIndex];
-        return item;
+        return q[StdRandom.uniform(count)];
     }
 
     // return an independent iterator over items in random order
@@ -88,14 +77,16 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     private class QueueIterator implements Iterator<Item> {
 
         private Item [] qIter;
-        private int countIter = count;
+        private int countIter;
         
         @SuppressWarnings("unchecked")
         public QueueIterator() {
-            qIter = (Item []) new Object[q.length];
-            for(int i = 0; i < q.length; i++) {
+            qIter = (Item []) new Object[count];
+            for(int i = 0; i < count; i++) {
                 qIter[i] = q[i];
             }
+            StdRandom.shuffle(qIter);
+            countIter = count;
         }
         
         @Override
@@ -105,13 +96,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         @Override
         public Item next() {
-            int randomIndex = (int) (StdRandom.uniform() * qIter.length);
-            while(qIter[randomIndex] == null) {
-                randomIndex = (int) (StdRandom.uniform() * qIter.length);
-            }
-            Item item = qIter[randomIndex];
-            qIter[randomIndex] = null;
-            countIter--;
+            Item item = qIter[--countIter];
             return item;
         }
         
@@ -126,6 +111,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         assertEquals(1, queue.size());
         queue.enqueue("b");
         queue.enqueue("c");
+        assertEquals(3, queue.size());
+
+        for(String s : queue) { StdOut.println(s); }
+        StdOut.println("count: " + queue.count);
+        StdOut.println("cap: " + queue.queueCapacity());
+        
         queue.enqueue("d");
         queue.enqueue("e");
         queue.enqueue("f");
