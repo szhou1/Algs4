@@ -29,7 +29,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public void enqueue(Item item) {
         if (item == null)
             throw new NullPointerException();
-        
+
         q[count] = item;
         count++;
         if (count > (0.75 * q.length)) {
@@ -39,9 +39,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     // remove and return a random item
     public Item dequeue() {
-        if(isEmpty())
+        if (isEmpty())
             throw new NoSuchElementException();
-        
+
         int randomIndex = StdRandom.uniform(count);
         Item item = q[randomIndex];
         q[randomIndex] = q[--count];
@@ -63,7 +63,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     // return (but do not remove) a random item
     public Item sample() {
-        if(isEmpty())
+        if (isEmpty())
             throw new NoSuchElementException();
         return q[StdRandom.uniform(count)];
     }
@@ -94,13 +94,13 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         @Override
         public Item next() {
-            if(!hasNext())
+            if (!hasNext())
                 throw new NoSuchElementException();
-            
+
             Item item = qIter[--countIter];
             return item;
         }
-        
+
         @Override
         public void remove() {
             throw new UnsupportedOperationException();

@@ -1,5 +1,7 @@
 import static org.junit.Assert.*;
 
+import java.util.Iterator;
+
 import org.junit.Test;
 
 public class TestDeque {
@@ -25,7 +27,7 @@ public class TestDeque {
         assertEquals(2, d.size());
         
         for (String s : d) {
-            System.out.println(s);
+//            System.out.println(s);
             assertNotNull(s);
         }
         
@@ -51,4 +53,26 @@ public class TestDeque {
         assertEquals("a", d.removeLast());
         assertTrue(d.isEmpty());
     }
+
+    @Test
+    public void test3() {
+        Deque<String> d = new Deque<String>();
+        d.addFirst("a");
+        d.addLast("b");
+        
+        Iterator<String> it = d.iterator();
+        while(it.hasNext()) {
+            System.out.println(it.next());
+//            it.next();
+        }
+        
+        d.removeFirst();
+        d.removeLast();
+        while(it.hasNext()) {
+            System.out.println(it.next());
+        }
+
+        assertTrue(d.isEmpty());
+    }
+    
 }

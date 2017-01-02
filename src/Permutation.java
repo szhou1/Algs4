@@ -7,7 +7,7 @@ public class Permutation {
         int k = Integer.parseInt(args[0]);
         RandomizedQueue<String> queue = new RandomizedQueue<String>();
 
-//        StdOut.println("k: " + k);
+        // StdOut.println("k: " + k);
         while (!StdIn.isEmpty()) {
             // if(queue.size() == k) {
             // String d = queue.dequeue();
@@ -15,17 +15,17 @@ public class Permutation {
             // }
             String s = StdIn.readString();
             queue.enqueue(s);
-//            System.out.println("+: " + s);
+            // System.out.println("+: " + s);
         }
 
-//        StdOut.println("Size:" + queue.size());
-//        StdOut.println("Content:");
+        // StdOut.println("Size:" + queue.size());
+        // StdOut.println("Content:");
 
-//        for (String s : queue) {
-//            StdOut.println(s);
-//        }
+        // for (String s : queue) {
+        // StdOut.println(s);
+        // }
 
-//        StdOut.println("result");
+        // StdOut.println("result");
         for (int i = 0; i < k; i++) {
             StdOut.println(queue.dequeue());
         }
