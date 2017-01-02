@@ -63,7 +63,6 @@ public class TestDeque {
         Iterator<String> it = d.iterator();
         while(it.hasNext()) {
             System.out.println(it.next());
-//            it.next();
         }
         
         d.removeFirst();

@@ -77,7 +77,7 @@ public class Deque<Item> implements Iterable<Item> {
             head.next.prev = null;
         }
         head = head.next;
-        if(head == null)
+        if (head == null)
             tail = null;
         return first;
     }
@@ -92,7 +92,7 @@ public class Deque<Item> implements Iterable<Item> {
             tail.prev.next = null;
         }
         tail = tail.prev;
-        if(tail == null)
+        if (tail == null)
             head = null;
         return last;
     }
@@ -126,19 +126,7 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     public static void main(String[] args) {
-        Deque<String> d = new Deque<String>();
-        d.addFirst("e");
-        d.addFirst("t");
-        d.addLast("z");
-        d.addLast("h");
-        d.addFirst("s");
 
-        d.removeLast();
-        d.removeFirst();
-
-        for (String s : d) {
-            System.out.println(s);
-        }
     }
 
 }

@@ -1,7 +1,6 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
@@ -53,7 +52,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     private void resize(int newSize) {
-        // StdOut.println("Resize to " + newSize);
         Item[] resized = (Item[]) new Object[newSize];
         for (int i = 0; i < count; i++) {
             resized[i] = q[i];
