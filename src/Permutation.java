@@ -15,7 +15,7 @@ public class Permutation {
         int n = k;
         while (!StdIn.isEmpty()) {
             String s = StdIn.readString();
-            if (StdRandom.uniform(++n) <= k) {
+            if (StdRandom.uniform(++n) + 1 <= k) {
                 queue.dequeue();
                 queue.enqueue(s);
             }
