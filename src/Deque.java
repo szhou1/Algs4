@@ -25,7 +25,7 @@ public class Deque<Item> implements Iterable<Item> {
 
     // is the deque empty?
     public boolean isEmpty() {
-        return head == null;
+        return head == null || tail == null;
     }
 
     // return the number of items on the deque
@@ -73,7 +73,9 @@ public class Deque<Item> implements Iterable<Item> {
             throw new NoSuchElementException();
         size--;
         Item first = head.item;
-        head.next.prev = null;
+        if(head.next != null) {
+            head.next.prev = null;
+        }
         head = head.next;
         return first;
     }
@@ -84,7 +86,9 @@ public class Deque<Item> implements Iterable<Item> {
             throw new NoSuchElementException();
         size--;
         Item last = tail.item;
-        tail.prev.next = null;
+        if(tail.prev != null) {
+            tail.prev.next = null;
+        }
         tail = tail.prev;
         return last;
     }
