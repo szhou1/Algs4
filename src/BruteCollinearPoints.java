@@ -1,21 +1,20 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.StdRandom;
-import wk2_queue.RandomizedQueue;
 
 public class BruteCollinearPoints {
 
-    private LineSegment[] lineSegments;
+    private ArrayList<LineSegment> lineSegments;
     private int count = 0;
 
     // finds all line segments containing 4 points
     public BruteCollinearPoints(Point[] points) {
 
         int n = points.length;
-        lineSegments = new LineSegment[10];
+        lineSegments = new ArrayList<LineSegment>();
         Arrays.sort(points, points[0].slopeOrder());
 
         for (int p = 0; p < n; p++) {
@@ -31,25 +30,41 @@ public class BruteCollinearPoints {
                         if (slopePQ == slopeQR && slopePQ == slopeRS && slopePQ == slopeSP) {
 
                             LineSegment newSeg = new LineSegment(points[p], points[s]);
-                            LineSegment newSegRev = new LineSegment(points[s], points[p]);
+//                            LineSegment newSegRev = new LineSegment(points[s], points[p]);
                             boolean exists = false;
                             for (LineSegment seg : lineSegments) {
                                 if (seg != null) {
-                                    if (seg.toString().equals(newSeg.toString()) || seg.toString().equals(newSegRev.toString())) {
+                                    if (seg.toString().equals(newSeg.toString()) 
+//                                            || seg.toString().equals(newSegRev.toString())
+                                            ) {
                                         exists = true;
                                     } 
+//                                    if(seg.q.compareTo(newSeg.q) < 0 && seg.p.compareTo(newSeg.p) <= 0) {
+//                                        System.out.println("Replace " + seg +  " with larger: " + newSeg);
+//                                        lineSegments.set(lineSegments.indexOf(seg), newSeg);
+//                                        exists = true;
+//                                    }
+//                                    if(seg.p.compareTo(newSeg.p) < 0) {
+//                                        System.out.println("Already have larger " + seg + ", ignoring " + newSeg);
+//                                        exists = true;
+//                                    }
                                 }
                             }
                             if (exists == false) {
-                                System.out.println(newSeg);
-                                
-                                lineSegments[count++] = newSeg;
+//                                System.out.println(newSeg);
+                                count++;
+                                lineSegments.add(newSeg);
                                 
                             }
                         }
                     }
                 }
             }
+        }
+        
+        // remove subsegments
+        for(LineSegment seg : lineSegments) {
+            
         }
     }
 
@@ -60,7 +75,8 @@ public class BruteCollinearPoints {
 
     // the line segments
     public LineSegment[] segments() {
-        return lineSegments;
+        LineSegment [] arr = new LineSegment[numberOfSegments()];
+        return lineSegments.toArray(arr);
     }
 
     public static void main(String[] args) {
@@ -82,9 +98,6 @@ public class BruteCollinearPoints {
         }
         StdDraw.show();
 
-        for (Point p : points) {
-            System.out.println(p);
-        }
         BruteCollinearPoints brute = new BruteCollinearPoints(points);
         System.out.println("Total segments: " + brute.numberOfSegments());
         for (LineSegment ls : brute.segments()) {
@@ -94,8 +107,5 @@ public class BruteCollinearPoints {
             }
         }
         StdDraw.show();
-        // for (int i = 0; i < k; i++) {
-        // StdOut.println(queue.dequeue());
-        // }
     }
 }
