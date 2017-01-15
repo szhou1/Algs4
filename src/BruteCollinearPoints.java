@@ -1,5 +1,6 @@
 import java.util.Arrays;
 
+import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
@@ -7,62 +8,43 @@ import wk2_queue.RandomizedQueue;
 
 public class BruteCollinearPoints {
 
-    LineSegment[] lineSegments;
+    private LineSegment[] lineSegments;
+    private int count = 0;
 
     // finds all line segments containing 4 points
     public BruteCollinearPoints(Point[] points) {
 
         int n = points.length;
-        lineSegments = new LineSegment[n];
-        int count = 0;
+        lineSegments = new LineSegment[10];
+        Arrays.sort(points, points[0].slopeOrder());
 
         for (int p = 0; p < n; p++) {
-            for (int q = 0; q < n; q++) {
-                for (int r = 0; r < n; r++) {
-                    for (int s = 0; s < n; s++) {
-                        // make sure 4 points are not null
-                        if(points[p] == null || points[q] == null || points[r] == null || points[s] == null) {
-                            continue;
-                        }
+            for (int q = p+1; q < n; q++) {
+                for (int r = q+1; r < n; r++) {
+                    for (int s = r+1; s < n; s++) {
                         
-                        // make sure 4 points are distinct
-                        if(points[p].compareTo(points[q]) == 0 
-                            || points[p].compareTo(points[r]) == 0
-                            || points[p].compareTo(points[s]) == 0
-                            || points[q].compareTo(points[r]) == 0
-                            || points[q].compareTo(points[s]) == 0
-                            || points[r].compareTo(points[s]) == 0) {
-                                continue;
-                            }
-                        
-                        double slopeQ = points[p].slopeTo(points[q]);
-                        double slopeR = points[p].slopeTo(points[r]);
-                        double slopeS = points[p].slopeTo(points[s]);
+                        double slopePQ = points[p].slopeTo(points[q]);
+                        double slopeQR = points[q].slopeTo(points[r]);
+                        double slopeRS = points[r].slopeTo(points[s]);
+                        double slopeSP = points[s].slopeTo(points[p]);
 
-                        if (slopeQ == slopeR && slopeQ == slopeS) {
-                            Point[] collPoints = new Point[4];
-                            collPoints[0] = points[p];
-                            collPoints[1] = points[q];
-                            collPoints[2] = points[r];
-                            collPoints[3] = points[s];
-                            Arrays.sort(collPoints, points[p].slopeOrder());
-                            // System.out.println(collPoints[0] + " -> " +
-                            // collPoints[3]);
-                            LineSegment newSeg = new LineSegment(collPoints[0], collPoints[3]);
-                            LineSegment newSegRev = new LineSegment(collPoints[3], collPoints[0]);
+                        if (slopePQ == slopeQR && slopePQ == slopeRS && slopePQ == slopeSP) {
+
+                            LineSegment newSeg = new LineSegment(points[p], points[s]);
+                            LineSegment newSegRev = new LineSegment(points[s], points[p]);
                             boolean exists = false;
                             for (LineSegment seg : lineSegments) {
                                 if (seg != null) {
-                                    if (seg.toString() == newSeg.toString() || seg.toString() == newSegRev.toString()) {
+                                    if (seg.toString().equals(newSeg.toString()) || seg.toString().equals(newSegRev.toString())) {
                                         exists = true;
-                                    }
-
+                                    } 
                                 }
                             }
                             if (exists == false) {
                                 System.out.println(newSeg);
                                 
                                 lineSegments[count++] = newSeg;
+                                
                             }
                         }
                     }
@@ -73,7 +55,7 @@ public class BruteCollinearPoints {
 
     // the number of line segments
     public int numberOfSegments() {
-        return lineSegments.length;
+        return count;
     }
 
     // the line segments
@@ -90,15 +72,28 @@ public class BruteCollinearPoints {
             Point p = new Point(StdIn.readInt(), StdIn.readInt());
             points[count++] = p;
         }
+        
+        // draw the points
+        StdDraw.enableDoubleBuffering();
+        StdDraw.setXscale(0, 32768);
+        StdDraw.setYscale(0, 32768);
+        for (Point p : points) {
+            p.draw();
+        }
+        StdDraw.show();
 
         for (Point p : points) {
             System.out.println(p);
         }
         BruteCollinearPoints brute = new BruteCollinearPoints(points);
-        System.out.println(brute.numberOfSegments());
+        System.out.println("Total segments: " + brute.numberOfSegments());
         for (LineSegment ls : brute.segments()) {
-            System.out.println(ls);
+            if(ls != null) {                
+                System.out.println(ls);
+                ls.draw();
+            }
         }
+        StdDraw.show();
         // for (int i = 0; i < k; i++) {
         // StdOut.println(queue.dequeue());
         // }
