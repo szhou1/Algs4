@@ -1,3 +1,4 @@
+package wk2_queue;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
