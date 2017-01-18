@@ -11,7 +11,6 @@ public class FastCollinearPoints {
     
     private ArrayList<LineSegment> lineSegments;
 
-    
     // finds all line segments containing 4 or more points
     public FastCollinearPoints(Point[] points) {
         if(points == null) {
@@ -54,8 +53,9 @@ public class FastCollinearPoints {
 //                    System.out.println("Found same adj slope: " + slope + " with " + temp[q]);
                     counter++;
 //                    System.out.println("min: " + min);
-                    max = max.compareTo(temp[q]) < 0 ? temp[q] : max;
-                    max = max.compareTo(temp[q-1]) < 0 ? temp[q-1] : max;
+                    max = temp[q];
+//                    max = max.compareTo(temp[q]) < 0 ? temp[q] : max;
+//                    max = max.compareTo(temp[q-1]) < 0 ? temp[q-1] : max;
                     min = min.compareTo(temp[q]) > 0 ? temp[q] : min;
                     min = min.compareTo(temp[q-1]) > 0 ? temp[q-1] : min;
 //                    System.out.println("min after: " + min);
