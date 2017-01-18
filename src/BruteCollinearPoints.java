@@ -100,6 +100,10 @@ public class BruteCollinearPoints {
             points[count++] = p;
         }
 
+        if(points.length < 4) {
+            return;
+        }
+        
         // draw the points
         StdDraw.enableDoubleBuffering();
         StdDraw.setXscale(0, 32768);
