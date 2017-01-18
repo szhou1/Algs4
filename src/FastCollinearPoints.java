@@ -6,6 +6,7 @@ import java.util.List;
 
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdIn;
+import edu.princeton.cs.algs4.StdOut;
 
 public class FastCollinearPoints {
     
@@ -38,7 +39,7 @@ public class FastCollinearPoints {
             Point [] temp = Arrays.copyOf(points, points.length);
             
             Arrays.sort(temp, origin.slopeOrder());
-//            System.out.println("************************* Sorted slope order for " + origin);
+//            StdOut.println("************************* Sorted slope order for " + origin);
 //            printArray(temp);
             
             int counter = 1;
@@ -48,22 +49,22 @@ public class FastCollinearPoints {
             
             for(int q = 2; q < points.length; q++) {
                 double slope2 = origin.slopeTo(temp[q]);
-//                System.out.println(slope2 + " " + temp[q]);
+//                StdOut.println(slope2 + " " + temp[q]);
                 if(slope == slope2) {
-//                    System.out.println("Found same adj slope: " + slope + " with " + temp[q]);
+//                    StdOut.println("Found same adj slope: " + slope + " with " + temp[q]);
                     counter++;
-//                    System.out.println("min: " + min);
+//                    StdOut.println("min: " + min);
                     max = temp[q];
 //                    max = max.compareTo(temp[q]) < 0 ? temp[q] : max;
 //                    max = max.compareTo(temp[q-1]) < 0 ? temp[q-1] : max;
                     min = min.compareTo(temp[q]) > 0 ? temp[q] : min;
                     min = min.compareTo(temp[q-1]) > 0 ? temp[q-1] : min;
-//                    System.out.println("min after: " + min);
+//                    StdOut.println("min after: " + min);
 
                 } else {
                     if(counter >= 3 && min == origin) {
-//                        System.out.println("Counter size: " + counter);
-//                        System.out.println(origin + " -> " + max);
+//                        StdOut.println("Counter size: " + counter);
+//                        StdOut.println(origin + " -> " + max);
                         lineSegments.add(new LineSegment(origin, max));
                     }
                     counter = 1;
@@ -94,7 +95,7 @@ public class FastCollinearPoints {
     
     private void printArray(Object[] array) {
         for(Object o : array) {
-            System.out.println(o);
+            StdOut.println(o);
         }
     }
     
@@ -122,10 +123,10 @@ public class FastCollinearPoints {
         StdDraw.show();
 
         FastCollinearPoints brute = new FastCollinearPoints(points);
-        System.out.println("Total segments: " + brute.numberOfSegments());
+        StdOut.println("Total segments: " + brute.numberOfSegments());
         for (LineSegment ls : brute.segments()) {
             if(ls != null) {                
-//                System.out.println(ls);
+                StdOut.println(ls);
                 ls.draw();
             }
         }

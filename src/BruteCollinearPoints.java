@@ -43,24 +43,24 @@ public class BruteCollinearPoints {
                         
                         
                         // double slopeSP = points[s].slopeTo(points[p]);
-//                        System.out.println(points[p] + " " + points[q] + " " + points[r] + " " + points[s]);
+//                        StdOut.println(points[p] + " " + points[q] + " " + points[r] + " " + points[s]);
                         if (slopePQ == slopeQR && slopePQ == slopeRS) {
-//                            System.out.println("Same Slope");
+//                            StdOut.println("Same Slope");
                             LineSegment newSeg = new LineSegment(points[p], points[s]);
-                            LineSegment newSegRev = new LineSegment(points[s], points[p]);
-                            boolean exists = false;
-                            for (LineSegment seg : lineSegments) {
-                                if (seg != null) {
-                                    if (seg.toString().equals(newSeg.toString())
-                                            || seg.toString().equals(newSegRev.toString())) {
-                                        exists = true;
-                                    }
-                                }
-                            }
-                            if (exists == false) {
+//                            LineSegment newSegRev = new LineSegment(points[s], points[p]);
+//                            boolean exists = false;
+//                            for (LineSegment seg : lineSegments) {
+//                                if (seg != null) {
+//                                    if (seg.toString().equals(newSeg.toString())
+//                                            || seg.toString().equals(newSegRev.toString())) {
+//                                        exists = true;
+//                                    }
+//                                }
+//                            }
+//                            if (exists == false) {
                                 count++;
                                 lineSegments.add(newSeg);
-                            }
+//                            }
                         }
                     }
                 }
@@ -86,7 +86,7 @@ public class BruteCollinearPoints {
 
     private void printArray(Object[] array) {
         for (Object o : array) {
-            System.out.println(o);
+            StdOut.println(o);
         }
     }
 
@@ -114,10 +114,10 @@ public class BruteCollinearPoints {
         StdDraw.show();
 
         BruteCollinearPoints brute = new BruteCollinearPoints(points);
-        System.out.println("Total segments: " + brute.numberOfSegments());
+        StdOut.println("Total segments: " + brute.numberOfSegments());
         for (LineSegment ls : brute.segments()) {
             if (ls != null) {
-//                System.out.println(ls);
+                StdOut.println(ls);
                 ls.draw();
             }
         }
