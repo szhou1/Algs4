@@ -11,66 +11,45 @@ public class BruteCollinearPoints {
     private int count = 0;
 
     // finds all line segments containing 4 points
-    public BruteCollinearPoints(Point[] points) {
-        if(points == null) {
+    public BruteCollinearPoints(Point[] input) {
+        if (input == null) {
             throw new NullPointerException();
         }
+        Point[] points = Arrays.copyOf(input, input.length);
 
         int n = points.length;
         lineSegments = new ArrayList<LineSegment>();
         Arrays.sort(points);
-        for(int i = 0; i < n; i++) {
-            if(points[i] == null) {
+        for (int i = 0; i < n; i++) {
+            if (points[i] == null) {
                 throw new NullPointerException();
             }
         }
 
-//        printArray(points);
-
         for (int p = 0; p < n; p++) {
             for (int q = p + 1; q < n; q++) {
                 // check for duplicate points
-                if(points[p].slopeTo(points[q]) == Double.NEGATIVE_INFINITY) {
+                if (points[p].slopeTo(points[q]) == Double.NEGATIVE_INFINITY) {
                     throw new IllegalArgumentException();
                 }
-                
+
                 for (int r = q + 1; r < n; r++) {
                     for (int s = r + 1; s < n; s++) {
 
                         double slopePQ = points[p].slopeTo(points[q]);
                         double slopeQR = points[q].slopeTo(points[r]);
                         double slopeRS = points[r].slopeTo(points[s]);
-                        
-                        
-                        // double slopeSP = points[s].slopeTo(points[p]);
-//                        StdOut.println(points[p] + " " + points[q] + " " + points[r] + " " + points[s]);
+
                         if (slopePQ == slopeQR && slopePQ == slopeRS) {
-//                            StdOut.println("Same Slope");
                             LineSegment newSeg = new LineSegment(points[p], points[s]);
-//                            LineSegment newSegRev = new LineSegment(points[s], points[p]);
-//                            boolean exists = false;
-//                            for (LineSegment seg : lineSegments) {
-//                                if (seg != null) {
-//                                    if (seg.toString().equals(newSeg.toString())
-//                                            || seg.toString().equals(newSegRev.toString())) {
-//                                        exists = true;
-//                                    }
-//                                }
-//                            }
-//                            if (exists == false) {
-                                count++;
-                                lineSegments.add(newSeg);
-//                            }
+                            count++;
+                            lineSegments.add(newSeg);
                         }
                     }
                 }
             }
         }
 
-        // remove subsegments
-        for (LineSegment seg : lineSegments) {
-
-        }
     }
 
     // the number of line segments
@@ -84,12 +63,6 @@ public class BruteCollinearPoints {
         return lineSegments.toArray(arr);
     }
 
-    private void printArray(Object[] array) {
-        for (Object o : array) {
-            StdOut.println(o);
-        }
-    }
-
     public static void main(String[] args) {
         int k = StdIn.readInt();
 
@@ -100,10 +73,6 @@ public class BruteCollinearPoints {
             points[count++] = p;
         }
 
-        if(points.length < 4) {
-            return;
-        }
-        
         // draw the points
         StdDraw.enableDoubleBuffering();
         StdDraw.setXscale(0, 32768);
