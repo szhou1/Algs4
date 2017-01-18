@@ -14,11 +14,18 @@ public class FastCollinearPoints {
     
     // finds all line segments containing 4 or more points
     public FastCollinearPoints(Point[] points) {
+        if(points == null) {
+            throw new NullPointerException();
+        }
+        
         Arrays.sort(points);
 //        printArray(points);
         lineSegments = new ArrayList<LineSegment>();
         
         for(int i = 0; i < points.length; i++) {
+            if(points[i] == null) {
+                throw new NullPointerException();
+            }
             Point origin = points[i];
             
             Point [] temp = Arrays.copyOf(points, points.length);
@@ -94,23 +101,23 @@ public class FastCollinearPoints {
         }
         
         // draw the points
-//        StdDraw.enableDoubleBuffering();
-//        StdDraw.setXscale(0, 32768);
-//        StdDraw.setYscale(0, 32768);
-//        for (Point p : points) {
-//            p.draw();
-//        }
-//        StdDraw.show();
+        StdDraw.enableDoubleBuffering();
+        StdDraw.setXscale(0, 32768);
+        StdDraw.setYscale(0, 32768);
+        for (Point p : points) {
+            p.draw();
+        }
+        StdDraw.show();
 
         FastCollinearPoints brute = new FastCollinearPoints(points);
         System.out.println("Total segments: " + brute.numberOfSegments());
         for (LineSegment ls : brute.segments()) {
             if(ls != null) {                
-                System.out.println(ls);
-//                ls.draw();
+//                System.out.println(ls);
+                ls.draw();
             }
         }
-//        StdDraw.show();
+        StdDraw.show();
     }
 
 }
