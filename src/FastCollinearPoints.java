@@ -19,6 +19,14 @@ public class FastCollinearPoints {
         }
         
         Arrays.sort(points);
+        
+        // check for duplicate points
+        for(int i = 1; i < points.length; i++) {
+            if(points[i - 1].slopeTo(points[i]) == Double.NEGATIVE_INFINITY) {
+                throw new IllegalArgumentException();
+            }
+        }
+        
 //        printArray(points);
         lineSegments = new ArrayList<LineSegment>();
         

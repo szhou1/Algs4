@@ -29,12 +29,19 @@ public class BruteCollinearPoints {
 
         for (int p = 0; p < n; p++) {
             for (int q = p + 1; q < n; q++) {
+                // check for duplicate points
+                if(points[p].slopeTo(points[q]) == Double.NEGATIVE_INFINITY) {
+                    throw new IllegalArgumentException();
+                }
+                
                 for (int r = q + 1; r < n; r++) {
                     for (int s = r + 1; s < n; s++) {
 
                         double slopePQ = points[p].slopeTo(points[q]);
                         double slopeQR = points[q].slopeTo(points[r]);
                         double slopeRS = points[r].slopeTo(points[s]);
+                        
+                        
                         // double slopeSP = points[s].slopeTo(points[p]);
 //                        System.out.println(points[p] + " " + points[q] + " " + points[r] + " " + points[s]);
                         if (slopePQ == slopeQR && slopePQ == slopeRS) {
